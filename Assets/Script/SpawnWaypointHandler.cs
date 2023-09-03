@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    public class SpawnManager : Singleton<SpawnManager>
+    public class SpawnWaypointHandler : Singleton<SpawnWaypointHandler>
     {
+        [SerializeField] private Transform[] spawnPoints;
         [SerializeField] private Transform[] wayPoints1;
         [SerializeField] private Transform[] wayPoints2;
         [SerializeField] private Transform[] wayPoints3;
 
         private int index = 0;
+
+        public Transform GetSpawnPoint()
+        {
+            int idx = Random.Range(0, spawnPoints.Length - 1);
+            return spawnPoints[idx];
+        }
 
         public Transform[] GetWayPoints ()
         {

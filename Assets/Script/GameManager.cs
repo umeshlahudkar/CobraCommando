@@ -48,7 +48,7 @@ using UnityEngine;
             
             for(int i = 0; i < enemies; i++)
             {
-                Transform[] wayPoints = SpawnManager.Instance.GetWayPoints();
+                Transform[] wayPoints = SpawnWaypointHandler.Instance.GetWayPoints();
                 EnemyController enemy = Instantiate<EnemyController>(enemyPrefab, wayPoints[Random.Range(0, wayPoints.Length)].position, Quaternion.identity);
                 enemy.SetUpEnemy(player, wayPoints);
                 enemiesToSpawn--;

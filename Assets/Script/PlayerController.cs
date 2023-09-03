@@ -23,6 +23,7 @@ using UnityEngine.UI;
         [SerializeField] private float weaponDamagePoint;
 
         private bool isGrounded;
+        private Transform camTransform;
         private Camera cam;
 
         private float movementX;
@@ -48,6 +49,7 @@ using UnityEngine.UI;
         private void Start()
         {
             cam = Camera.main;
+            camTransform = cam.gameObject.transform.parent;
             healthController = GetComponent<HealthController>();
         }
 
@@ -71,26 +73,12 @@ using UnityEngine.UI;
                 timeElapced = 0;
                 Shoot();
             }
-            //isGrounded = Physics.Raycast(groundCheckPoint.position, Vector3.down, 0.25f, groundLayer);
-            //if(characterController.isGrounded)
-            //{
-            //    jumpVect.y = 0;
-            //}
-
-
-            //if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            //{
-            //    jumpVect.y += jumpForce;
-            //}
-
-            //jumpVect.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
-            //characterController.Move(jumpVect * Time.deltaTime);
         }
 
         private void LateUpdate()
         {
-            cam.transform.position = viewPoint.position;
-            cam.transform.rotation = viewPoint.rotation;
+            camTransform.transform.position = viewPoint.position;
+            camTransform.transform.rotation = viewPoint.rotation;
         }
 
         private void CatchInput()
@@ -140,7 +128,7 @@ using UnityEngine.UI;
         public void Shoot()
         {
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            ray.origin = cam.transform.position + cam.transform.forward;
+            ray.origin = camTransform.transform.position + camTransform.transform.forward;
 
             //RaycastHit[] raycastHits = Physics.RaycastAll(ray.origin, transform.forward);
 
