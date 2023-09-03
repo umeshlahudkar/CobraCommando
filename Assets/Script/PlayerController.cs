@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(!GameManager.Instance.isGameRunning) { return; }
+        if(!GameManager.Instance.IsGameRunning) { return; }
         CatchInput();
         Rotate();
         LookUpDown();
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
             {
                 Instantiate(bloodeffectParticle, ht.point, Quaternion.identity);
                 Instantiate(muzzleFlashParticlePrefab, muzzleFlashPosition.position, muzzleFlashPosition.rotation);
-                enemy.DealDamage(10, this);
+                enemy.DealDamage(10);
                 AudioManager.Instance.PlayFireSound();
             }
         }
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0)
         {
-            // GameplayUIController.Instance.EnableGameOverScreen();
+            GameManager.Instance.PlayerDied();
         }
     }
 
@@ -178,5 +178,12 @@ public class PlayerController : MonoBehaviour
     public float GetWeaponDamagePoint()
     {
         return weaponDamagePoint;
+    }
+
+    public void Reset(Transform newtransform)
+    {
+        transform.position = newtransform.position;
+        transform.rotation = newtransform.rotation;
+        SetHealth(100);
     }
 }

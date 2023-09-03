@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if(!isDied && GameManager.Instance.isGameRunning)
+        if(!isDied && GameManager.Instance.IsGameRunning)
         {
             //if(currentState == null) { currentState = new Idle(this, agent, anim, player.transform); }
             currentState = currentState.Process();
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
         enemyAudioSource.PlayOneShot(fireSound);
     }
 
-    public void DealDamage(int damagePoint, PlayerController playerController)
+    public void DealDamage(int damagePoint)
     {
         if (isDied) return;
         health -= damagePoint;
@@ -69,7 +69,6 @@ public class EnemyController : MonoBehaviour
         }
         if (health <= 0)
         {
-            playerController.IncreamentKillCount();
             currentState = new Die(this, agent, anim, player.transform);
         }
     }
@@ -78,7 +77,7 @@ public class EnemyController : MonoBehaviour
     {
         isDied = true;
         player.IncreamentKillCount();
-        GameManager.Instance.EnemyDied();
+        GameManager.Instance.EnemyDied(this);
         can.gameObject.SetActive(false);
         Destroy(gameObject, 2);
     }

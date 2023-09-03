@@ -8,12 +8,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private PlayerController playerPrefab;
 
     private PlayerController playerController;
-    private EnemyController enemyController;
+    private List<EnemyController> enemyControllers = new List<EnemyController>();
     private int maxEnemiesInWave = 3;
     private int enemiesToSpawn = 0;
     private int currentLevel = 1;
-    private int currentEnemies = 0;
-    public bool isGameRunning { get; private set; }
+    private bool isGameRunning;
 
     public void PrepareGameplay(int level)
     {
@@ -25,7 +24,7 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(SpawnEnemies());
     }
 
-    public void StartGamePlay()
+    public void StartLevel()
     {
         isGameRunning = true;
     }
@@ -50,45 +49,74 @@ public class GameManager : Singleton<GameManager>
             EnemyController enemy = Instantiate<EnemyController>(enemyPrefab, wayPoints[Random.Range(0, wayPoints.Length)].position, Quaternion.identity);
             enemy.SetUpEnemy(playerController, wayPoints);
             enemiesToSpawn--;
-            currentEnemies++;
+            enemyControllers.Add(enemy);
             yield return null;
         }
     }
 
-    private IEnumerator StartLevel(int level)
+    public void RetryLevel()
     {
-        //GameplayUIController.Instance.EnableLevelDisplayScreen(level);
-        currentLevel = level;
-        enemiesToSpawn = level;
-        //GameplayUIController.Instance.UpdateLevelTargetText(level);
-        StartCoroutine(SpawnEnemies());
-
-        yield return new WaitForSeconds(5);
-
-        //GameplayUIController.Instance.DisableLevelDisplayScreen();
-        isGameRunning = true;
-    }
-
-    private void StartNextLevel()
-    {
-        isGameRunning = false;
-        currentLevel++;
+        ClearEnemies();
         enemiesToSpawn = currentLevel;
-        //playerPrefab.ResetHealth();
-        StartCoroutine(StartLevel(currentLevel));
+        UIController.Instance.UpdateLevelTargetText(currentLevel);
+        UIController.Instance.UpdateKillText(0);
+        StartCoroutine(SpawnEnemies());
+        playerController.Reset(SpawnWaypointHandler.Instance.GetSpawnPoint());
     }
 
-    
-
-    public void EnemyDied()
+    public bool IsGameRunning
     {
-        currentEnemies--;
-        if(currentEnemies == 0 && enemiesToSpawn > 0)
+        get { return isGameRunning; }
+        set { isGameRunning = value; }
+    }
+
+    public int CurrentLevel
+    {
+        get { return currentLevel; }
+    }
+
+    public void EnemyDied(EnemyController diedEnemy)
+    {
+        foreach(EnemyController enemy in enemyControllers)
+        {
+            if(enemy == diedEnemy)
+            {
+                enemyControllers.Remove(enemy);
+                break;
+            }
+        }
+
+        if(enemyControllers.Count == 0 && enemiesToSpawn > 0)
         {
             StartCoroutine(SpawnEnemies());
-        } else if( currentEnemies == 0)
+        } 
+        else if(enemyControllers.Count == 0)
         {
-            StartNextLevel();
+            //StartNextLevel();
         }
+    }
+
+    public void PlayerDied()
+    {
+        UIController.Instance.EnableGameOverScreen();
+        isGameRunning = false;
+    }
+
+    public void ClearEnemies()
+    {
+        foreach (EnemyController enemy in enemyControllers)
+        {
+            Destroy(enemy.gameObject);
+        }
+        enemyControllers.Clear();
+    }
+
+    public void ClearAll()
+    {
+        currentLevel = 1;
+        enemiesToSpawn = 0;
+
+        Destroy(playerController.gameObject);
+        ClearEnemies();
     }
 }

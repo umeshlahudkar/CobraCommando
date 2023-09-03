@@ -10,9 +10,16 @@ public class LoadingScreen : MonoBehaviour
     private float elapsedTime = 0f;
     private float animTime = 5.0f;
     private float animElapcedTime = 0;
-    private float textChangeTime = 1.0f;
+    private float textChangeTime = 0.5f;
     private string[] loadingPhases = { "Loading.", "Loading..", "Loading..." };
     private int currentPhaseIndex = 0;
+
+    private void OnEnable()
+    {
+        animElapcedTime = 0;
+        elapsedTime = 0;
+        currentPhaseIndex = 0;
+    }
 
     public IEnumerator PlayLoadingAnimation()
     {

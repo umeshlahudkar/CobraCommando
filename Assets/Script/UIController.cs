@@ -8,13 +8,11 @@ public class UIController : Singleton<UIController>
 {
     [Header("Main Menu Screen")]
     [SerializeField] private GameObject mainMenuScreen;
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button quitButton;
 
     [Header("Loading Screen")]
     [SerializeField] private LoadingScreen loadingScreen;
-
-    [Header("Lobby screen Buttons")]
-    [SerializeField] private Button playButton;
-    [SerializeField] private Button quitButton;
 
     [Header("Gameplay Stats text ")]
     [SerializeField] private TextMeshProUGUI killText;
@@ -28,17 +26,21 @@ public class UIController : Singleton<UIController>
 
     [Header("Game Over screen")]
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private Button homeButton;
+    [SerializeField] private Button retryButton;
 
     [Header("Player UI")]
     public DynamicJoystick moveJoystick;
     public DynamicJoystick rotateJoystick;
-    public Slider healthBar; 
+    public Slider healthBar;
 
 
     private void OnEnable()
     {
         playButton.onClick.AddListener(OnPlayButtonClick);
         quitButton.onClick.AddListener(OnQuitButtonClick);
+        homeButton.onClick.AddListener(OnHomeButtonclick);
+        retryButton.onClick.AddListener(OnRetryButtonclick);
     }
 
     private void Start()
@@ -56,17 +58,37 @@ public class UIController : Singleton<UIController>
 
     private IEnumerator StartGameplay()
     {
+        DisableAllScreen();
         loadingScreen.gameObject.SetActive(true);
         GameManager.Instance.PrepareGameplay(1);
         yield return StartCoroutine(loadingScreen.PlayLoadingAnimation());
-        GameManager.Instance.StartGamePlay();
-        mainMenuScreen.SetActive(false);
+        GameManager.Instance.StartLevel();
     }
 
     private void OnQuitButtonClick()
     {
-        Debug.Log("Quit button click");
         Application.Quit();
+    }
+
+    private void OnHomeButtonclick()
+    {
+        GameManager.Instance.ClearAll();
+        DisableAllScreen();
+        mainMenuScreen.SetActive(true);
+    }
+
+    private void OnRetryButtonclick()
+    {
+        StartCoroutine(RetryGameplay());
+    }
+
+    private IEnumerator RetryGameplay()
+    {
+        DisableAllScreen();
+        loadingScreen.gameObject.SetActive(true);
+        GameManager.Instance.RetryLevel();
+        yield return StartCoroutine(loadingScreen.PlayLoadingAnimation());
+        GameManager.Instance.StartLevel();
     }
 
     public void UpdateKillText(int count)
@@ -87,19 +109,22 @@ public class UIController : Singleton<UIController>
         targetCountText.text = "TARGET : " + level.ToString();
     }
 
-    public void DisableLevelDisplayScreen()
-    {
-        levelDispalyScreen.SetActive(false);
-    }
-
     public void EnableGameOverScreen()
     {
         gameOverScreen.SetActive(true);
     }
 
+    private void DisableAllScreen()
+    {
+        gameOverScreen.SetActive(false);
+        mainMenuScreen.SetActive(false);
+    }
+
     private void OnDisable()
     {
-        playButton.onClick.AddListener(OnPlayButtonClick);
-        quitButton.onClick.AddListener(OnQuitButtonClick);
+        playButton.onClick.RemoveListener(OnPlayButtonClick);
+        quitButton.onClick.RemoveListener(OnQuitButtonClick);
+        homeButton.onClick.RemoveListener(OnHomeButtonclick);
+        retryButton.onClick.RemoveListener(OnRetryButtonclick);
     }
 }
