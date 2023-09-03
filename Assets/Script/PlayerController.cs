@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform muzzleFlashPosition;
     [SerializeField] private ParticleSystem bloodeffectParticle;
 
-    [SerializeField] private DynamicJoystick rotateJoystick;
-    [SerializeField] private DynamicJoystick moveJoystick;
+    private DynamicJoystick rotateJoystick;
+    private DynamicJoystick moveJoystick;
+    private Slider healthBar;
 
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float movementSpeed;
@@ -37,7 +38,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 forwardMove;
     private Vector3 jumpVect;
 
-    private HealthController healthController;
     private Vector3 offset;
 
     private int killCount;
@@ -45,24 +45,20 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float autoShootInterval = 0.5f;
     private float timeElapced = 0;
+    private float health = 100.0f;
 
     private void Start()
     {
         cam = Camera.main;
         camTransform = cam.gameObject.transform.parent;
-        healthController = GetComponent<HealthController>();
     }
 
     public void Initialize(DynamicJoystick _moveJoystick, DynamicJoystick _rotateJoystick, Slider _healthBar)
     {
         moveJoystick = _moveJoystick;
         rotateJoystick = _rotateJoystick;
-        
-        if(healthController == null)
-        {
-            healthController = GetComponent<HealthController>();
-        }
-        healthController.Initialize(_healthBar);
+        healthBar = _healthBar;
+        SetHealth(health);
     }
 
     private void Update()
@@ -95,15 +91,9 @@ public class PlayerController : MonoBehaviour
 
     private void CatchInput()
     {
-        //rotationX += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        //rotationY += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
-
         rotationX += rotateJoystick.Horizontal * mouseSensitivity;
         rotationY += rotateJoystick.Vertical * mouseSensitivity;
-
-        //movementX = Input.GetAxisRaw("Horizontal");
-        //movementZ = Input.GetAxisRaw("Vertical");
-
+       
         movementX = moveJoystick.Horizontal;
         movementZ = moveJoystick.Vertical;
     }
@@ -142,42 +132,43 @@ public class PlayerController : MonoBehaviour
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         ray.origin = camTransform.transform.position + camTransform.transform.forward;
 
-        //RaycastHit[] raycastHits = Physics.RaycastAll(ray.origin, transform.forward);
-
         if(Physics.Raycast(ray, out RaycastHit ht))
-
-        //foreach (RaycastHit ht in raycastHits)
         {
             EnemyController enemy = ht.collider.gameObject.GetComponent<EnemyController>();
-            if (enemy != null && enemy.GetComponent<HealthController>().GetHealth() > 0)
+            if (enemy != null && enemy.GetHealth() > 0)
             {
                 Instantiate(bloodeffectParticle, ht.point, Quaternion.identity);
                 Instantiate(muzzleFlashParticlePrefab, muzzleFlashPosition.position, muzzleFlashPosition.rotation);
                 enemy.DealDamage(10);
                 AudioManager.Instance.PlayFireSound();
-                //break;
             }
         }
     }
 
     public void DealDamage(float weaponDamage)
     {
-        healthController.DecreamentHealth(weaponDamage);
-        if(healthController.GetHealth() <= 0)
+        health -= weaponDamage;
+        health = Mathf.Max(0, health);
+        healthBar.value = health;
+
+        if (health <= 0)
         {
             IncrementDeathCount();
             // GameplayUIController.Instance.EnableGameOverScreen();
         }
     }
 
-    public void ResetHealth()
+    public void SetHealth(float _health)
     {
-        healthController.SetHealth(100);
+        health = _health;
+        healthBar.minValue = 0;
+        healthBar.maxValue = health;
+        healthBar.value = health;
     }
 
     public float GetHealth()
     {
-        return healthController.GetHealth();
+        return health;
     }
 
     public void IncreamentKillCount()

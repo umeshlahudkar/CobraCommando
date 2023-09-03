@@ -72,7 +72,7 @@ public class GameManager : Singleton<GameManager>
         isGameRunning = false;
         currentLevel++;
         enemiesToSpawn = currentLevel;
-        playerPrefab.ResetHealth();
+        //playerPrefab.ResetHealth();
         StartCoroutine(StartLevel(currentLevel));
     }
 

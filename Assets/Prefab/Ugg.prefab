@@ -433,7 +433,6 @@ GameObject:
   - component: {fileID: 5733847642223225341}
   - component: {fileID: 5733847642223225339}
   - component: {fileID: 5733847642223225340}
-  - component: {fileID: 5733847642223225343}
   - component: {fileID: 3369001848670841006}
   m_Layer: 0
   m_Name: Ugg
@@ -543,20 +542,7 @@ MonoBehaviour:
   can: {fileID: 5733847643184340728}
   fireSound: {fileID: 8300000, guid: 8602b7d5cd15c1943a50aa53f171c8cf, type: 3}
   enemyAudioSource: {fileID: 3369001848670841006}
---- !u!114 &5733847642223225343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351032556320745637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4223b025e00e90549b8713894394cebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  healthBarSlider: {fileID: 5733847642367340364}
+  healthBar: {fileID: 5733847642367340364}
 --- !u!82 &3369001848670841006
 AudioSource:
   m_ObjectHideFlags: 0

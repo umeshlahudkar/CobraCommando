@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,23 +11,24 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Animator anim;
     private PlayerController player;
     private State currentState;
-    private HealthController healthController;
     private bool isDied = false;
     private Transform[] wayPoints;
     [SerializeField] private Canvas can;
     [SerializeField] private AudioClip fireSound;
     [SerializeField] private AudioSource enemyAudioSource;
-
+    [SerializeField] private Slider healthBar;
+    private float health = 100;
 
     public void SetUpEnemy(PlayerController player, Transform[] wayPoints)
     {
         this.player = player;
         this.wayPoints = wayPoints;
+        SetHealthBar();
+        currentState = new Idle(this, agent, anim, player.transform);
     }
 
     private void Start()
     {
-        healthController = gameObject.GetComponent<HealthController>();
         //currentState = new Idle(this, agent, anim, player.transform);
     }
 
@@ -34,7 +36,7 @@ public class EnemyController : MonoBehaviour
     {
         if(!isDied && GameManager.Instance.isGameRunning)
         {
-            if(currentState == null) { currentState = new Idle(this, agent, anim, player.transform); }
+            //if(currentState == null) { currentState = new Idle(this, agent, anim, player.transform); }
             currentState = currentState.Process();
         }
     }
@@ -57,12 +59,12 @@ public class EnemyController : MonoBehaviour
     public void DealDamage(float weaponDamage)
     {
         if (isDied) return;
-        healthController.DecreamentHealth(weaponDamage);
+        DecreamentHealth(weaponDamage);
         if(currentState.name != State.STATE.CounterAttack || currentState.name != State.STATE.Attack )
         {
             currentState = new CounterAttack(this, agent, anim, player.transform);
         }
-        if (healthController.GetHealth() <= 0)
+        if (health <= 0)
         {
             currentState = new Die(this, agent, anim, player.transform);
         }
@@ -75,5 +77,24 @@ public class EnemyController : MonoBehaviour
         GameManager.Instance.EnemyDied();
         can.gameObject.SetActive(false);
         Destroy(gameObject, 2);
+    }
+
+    public void SetHealthBar()
+    {
+        healthBar.minValue = 0;
+        healthBar.maxValue = health;
+        healthBar.value = health;
+    }
+
+    public void DecreamentHealth(float damagePoint)
+    {
+        health -= damagePoint;
+        health = Mathf.Max(0, health);
+        healthBar.value = health;
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }
