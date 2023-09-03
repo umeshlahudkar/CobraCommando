@@ -11,7 +11,6 @@ public class UIController : MonoBehaviour
 
     [Header("Loading Screen")]
     [SerializeField] private GameObject loadingScreen;
-    [SerializeField] private TextMeshProUGUI loadingScreenText;
 
     [Header("Lobby screen Buttons")]
     [SerializeField] private Button playButton;
@@ -45,15 +44,9 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void OpenLoadingScreen(string msg)
-    {
-        loadingScreenText.text = msg;
-        loadingScreen.SetActive(true);
-    }
-
     private void OnPlayButtonClick()
     {
-        Debug.Log("Play button click");
+        loadingScreen.SetActive(true);
     }
   
     private void OnQuitButtonClick()
