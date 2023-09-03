@@ -4,13 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class UIController : Singleton<UIController>
 {
     [Header("Main Menu Screen")]
     [SerializeField] private GameObject mainMenuScreen;
 
     [Header("Loading Screen")]
-    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private LoadingScreen loadingScreen;
 
     [Header("Lobby screen Buttons")]
     [SerializeField] private Button playButton;
@@ -27,7 +27,13 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelCountText;
     [SerializeField] private TextMeshProUGUI targetCountText;
 
+    [Header("Game Over screen")]
     [SerializeField] private GameObject gameOverScreen;
+
+    [Header("Player UI")]
+    public DynamicJoystick moveJoystick;
+    public DynamicJoystick rotateJoystick;
+    public Slider healthBar; 
 
 
     private void OnEnable()
@@ -46,9 +52,18 @@ public class UIController : MonoBehaviour
 
     private void OnPlayButtonClick()
     {
-        loadingScreen.SetActive(true);
+        StartCoroutine(StartGameplay());
     }
-  
+
+    private IEnumerator StartGameplay()
+    {
+        loadingScreen.gameObject.SetActive(true);
+        GameManager.Instance.PrepareGameplay(1);
+        yield return StartCoroutine(loadingScreen.PlayLoadingAnimation());
+        GameManager.Instance.StartGamePlay();
+        mainMenuScreen.SetActive(false);
+    }
+
     private void OnQuitButtonClick()
     {
         Debug.Log("Quit button click");

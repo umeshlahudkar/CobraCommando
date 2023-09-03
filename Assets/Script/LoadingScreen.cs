@@ -14,12 +14,7 @@ public class LoadingScreen : MonoBehaviour
     private string[] loadingPhases = { "Loading.", "Loading..", "Loading..." };
     private int currentPhaseIndex = 0;
 
-    private void Start()
-    {
-        StartCoroutine(PlayLoadingAnimation());
-    }
-
-    private IEnumerator PlayLoadingAnimation()
+    public IEnumerator PlayLoadingAnimation()
     {
         while (animElapcedTime <= animTime)
         {
@@ -35,7 +30,6 @@ public class LoadingScreen : MonoBehaviour
 
             yield return null;
         }
-
         this.gameObject.SetActive(false);
     }
 }
