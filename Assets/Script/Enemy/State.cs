@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class State
     {
         public enum STATE
@@ -91,4 +89,3 @@ namespace FPS.SinglePlayer
 
         
     }
-}

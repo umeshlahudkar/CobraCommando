@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FPS.SinglePlayer
-{
     public class HealthController : MonoBehaviour
     {
         [SerializeField] private float health;
@@ -42,4 +40,3 @@ namespace FPS.SinglePlayer
             healthBarSlider.value = health;
         }
     }
-}

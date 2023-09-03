@@ -33,7 +33,6 @@ public class Singleton<T> : MonoBehaviour  where T : Component
         else
         {
             _instance = this as T;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

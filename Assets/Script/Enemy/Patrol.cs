@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class Patrol : State
     {
         private int currentIndex = -1;
@@ -52,5 +50,3 @@ namespace FPS.SinglePlayer
             base.Exit();
         }
     }
-
-}

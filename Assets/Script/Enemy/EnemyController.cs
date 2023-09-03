@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class EnemyController : MonoBehaviour
     {
         [SerializeField] private NavMeshAgent agent;
@@ -78,4 +76,3 @@ namespace FPS.SinglePlayer
             Destroy(gameObject, 2);
         }
     }
-}

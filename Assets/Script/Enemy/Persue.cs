@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class Persue : State
     {
         public Persue(EnemyController _enemy, NavMeshAgent _agent, Animator _anim, Transform _player) :
@@ -45,4 +43,3 @@ namespace FPS.SinglePlayer
             base.Exit();
         }
     }
-}

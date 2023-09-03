@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FPS.SinglePlayer
-{
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Transform viewPoint;
@@ -168,7 +166,7 @@ namespace FPS.SinglePlayer
             if(healthController.GetHealth() <= 0)
             {
                 IncrementDeathCount();
-                GameplayUIController.Instance.EnableGameOverScreen();
+               // GameplayUIController.Instance.EnableGameOverScreen();
             }
         }
 
@@ -185,13 +183,13 @@ namespace FPS.SinglePlayer
         public void IncreamentKillCount()
         {
             killCount++;
-            GameplayUIController.Instance.UpdateKillText(killCount);
+            //GameplayUIController.Instance.UpdateKillText(killCount);
         }
 
         public void IncrementDeathCount()
         {
             deathCount++;
-            GameplayUIController.Instance.UpdateDeathText(deathCount);
+            //GameplayUIController.Instance.UpdateDeathText(deathCount);
         }
 
 
@@ -200,4 +198,3 @@ namespace FPS.SinglePlayer
             return weaponDamagePoint;
         }
     }
-}

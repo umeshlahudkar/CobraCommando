@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FPS.SinglePlayer
-{
     public class GameManager : Singleton<GameManager>
     {
         [SerializeField] private EnemyController enemyPrefab;
@@ -21,15 +19,15 @@ namespace FPS.SinglePlayer
 
         private IEnumerator StartLevel(int level)
         {
-            GameplayUIController.Instance.EnableLevelDisplayScreen(level);
+            //GameplayUIController.Instance.EnableLevelDisplayScreen(level);
             currentLevel = level;
             enemiesToSpawn = level;
-            GameplayUIController.Instance.UpdateLevelTargetText(level);
+            //GameplayUIController.Instance.UpdateLevelTargetText(level);
             StartCoroutine(SpawnEnemies());
 
             yield return new WaitForSeconds(5);
 
-            GameplayUIController.Instance.DisableLevelDisplayScreen();
+            //GameplayUIController.Instance.DisableLevelDisplayScreen();
             isLevelStart = true;
         }
 
@@ -71,4 +69,3 @@ namespace FPS.SinglePlayer
             }
         }
     }
-}

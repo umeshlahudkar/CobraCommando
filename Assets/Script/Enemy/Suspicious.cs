@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class Suspicious : State
     {
         private float timeElapced = 0;
@@ -68,4 +66,3 @@ namespace FPS.SinglePlayer
             base.Exit();
         }
     }
-}

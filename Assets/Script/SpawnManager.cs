@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FPS.SinglePlayer
-{
     public class SpawnManager : Singleton<SpawnManager>
     {
         [SerializeField] private Transform[] wayPoints1;
@@ -33,5 +31,3 @@ namespace FPS.SinglePlayer
             return null;
         }
     }
-
-}

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class Idle : State
     {
         public Idle(EnemyController _enemy, NavMeshAgent _agent, Animator _anim, Transform _player) :
@@ -39,4 +37,3 @@ namespace FPS.SinglePlayer
         }
     }
 
-}

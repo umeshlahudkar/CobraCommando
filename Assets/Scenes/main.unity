@@ -1574,7 +1574,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2089891793}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FPS.SinglePlayer.GameplayUIController, Assembly-CSharp
         m_MethodName: OnMainMenuButtonClick
         m_Mode: 1
@@ -5191,7 +5191,6 @@ Transform:
   m_Children:
   - {fileID: 2048297570}
   - {fileID: 1479369532}
-  - {fileID: 2089891792}
   - {fileID: 6544913780901803064}
   - {fileID: 6544913781030705478}
   m_Father: {fileID: 0}
@@ -5467,58 +5466,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073474559}
   m_CullTransparentMesh: 1
---- !u!1 &2089891791
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2089891792}
-  - component: {fileID: 2089891793}
-  m_Layer: 0
-  m_Name: GameplayUIController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2089891792
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089891791}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2061055397}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2089891793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089891791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67806a48ae0d3d144a46078133d6cac4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killText: {fileID: 105621362}
-  DeathText: {fileID: 774321505}
-  levelText: {fileID: 2067557446}
-  targetText: {fileID: 808646353}
-  levelDispalyScreen: {fileID: 1123998495}
-  levelCountText: {fileID: 2073474561}
-  targetCountText: {fileID: 2102766685}
-  gameOverScreen: {fileID: 26901204}
 --- !u!1 &2102766683
 GameObject:
   m_ObjectHideFlags: 0
@@ -9409,7 +9356,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2061055397}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6544913780901803065
 MonoBehaviour:
@@ -9428,6 +9375,14 @@ MonoBehaviour:
   loadingScreenText: {fileID: 8478652291852948332}
   playButton: {fileID: 8478652291159306195}
   quitButton: {fileID: 8478652291607767976}
+  killText: {fileID: 105621362}
+  DeathText: {fileID: 774321505}
+  levelText: {fileID: 2067557446}
+  targetText: {fileID: 808646353}
+  levelDispalyScreen: {fileID: 1123998495}
+  levelCountText: {fileID: 2073474561}
+  targetCountText: {fileID: 2102766685}
+  gameOverScreen: {fileID: 26901204}
 --- !u!1 &6544913781030705477
 GameObject:
   m_ObjectHideFlags: 0
@@ -9461,7 +9416,7 @@ Transform:
   - {fileID: 6544913781205962041}
   - {fileID: 6544913781885489700}
   m_Father: {fileID: 2061055397}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6544913781030705479
 MonoBehaviour:

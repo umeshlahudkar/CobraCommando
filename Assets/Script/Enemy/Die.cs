@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class Die : State
     {
         private float timeToVanish = 5f;
@@ -40,5 +38,3 @@ namespace FPS.SinglePlayer
             base.Exit();
         }
     }
-
-}

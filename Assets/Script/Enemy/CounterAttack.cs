@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FPS.SinglePlayer
-{
     public class CounterAttack : State
     {
         public float rotSpeed = 2.0f;
@@ -56,5 +54,4 @@ namespace FPS.SinglePlayer
             base.Exit();
         }
     }
-}
 
