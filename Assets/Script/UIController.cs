@@ -18,7 +18,6 @@ public class UIController : Singleton<UIController>
 
     [Header("Gameplay Stats text ")]
     [SerializeField] private TextMeshProUGUI killText;
-    [SerializeField] private TextMeshProUGUI DeathText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI targetText;
 
@@ -71,11 +70,6 @@ public class UIController : Singleton<UIController>
     }
 
     public void UpdateKillText(int count)
-    {
-        killText.text = "KILL : " + count.ToString();
-    }
-
-    public void UpdateDeathText(int count)
     {
         killText.text = "KILL : " + count.ToString();
     }

@@ -19,6 +19,8 @@ public class GameManager : Singleton<GameManager>
     {
         currentLevel = level;
         enemiesToSpawn = level;
+        UIController.Instance.UpdateLevelTargetText(level);
+        UIController.Instance.UpdateKillText(0);
         SpawnPlayer();
         StartCoroutine(SpawnEnemies());
     }

@@ -56,16 +56,20 @@ public class EnemyController : MonoBehaviour
         enemyAudioSource.PlayOneShot(fireSound);
     }
 
-    public void DealDamage(float weaponDamage)
+    public void DealDamage(int damagePoint, PlayerController playerController)
     {
         if (isDied) return;
-        DecreamentHealth(weaponDamage);
-        if(currentState.name != State.STATE.CounterAttack || currentState.name != State.STATE.Attack )
+        health -= damagePoint;
+        health = Mathf.Max(0, health);
+        healthBar.value = health;
+
+        if (currentState.name != State.STATE.CounterAttack || currentState.name != State.STATE.Attack )
         {
             currentState = new CounterAttack(this, agent, anim, player.transform);
         }
         if (health <= 0)
         {
+            playerController.IncreamentKillCount();
             currentState = new Die(this, agent, anim, player.transform);
         }
     }
@@ -83,13 +87,6 @@ public class EnemyController : MonoBehaviour
     {
         healthBar.minValue = 0;
         healthBar.maxValue = health;
-        healthBar.value = health;
-    }
-
-    public void DecreamentHealth(float damagePoint)
-    {
-        health -= damagePoint;
-        health = Mathf.Max(0, health);
         healthBar.value = health;
     }
 

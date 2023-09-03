@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 offset;
 
     private int killCount;
-    private int deathCount;
 
     [SerializeField] private float autoShootInterval = 0.5f;
     private float timeElapced = 0;
@@ -139,7 +138,7 @@ public class PlayerController : MonoBehaviour
             {
                 Instantiate(bloodeffectParticle, ht.point, Quaternion.identity);
                 Instantiate(muzzleFlashParticlePrefab, muzzleFlashPosition.position, muzzleFlashPosition.rotation);
-                enemy.DealDamage(10);
+                enemy.DealDamage(10, this);
                 AudioManager.Instance.PlayFireSound();
             }
         }
@@ -153,7 +152,6 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0)
         {
-            IncrementDeathCount();
             // GameplayUIController.Instance.EnableGameOverScreen();
         }
     }
@@ -174,15 +172,8 @@ public class PlayerController : MonoBehaviour
     public void IncreamentKillCount()
     {
         killCount++;
-        //GameplayUIController.Instance.UpdateKillText(killCount);
+        UIController.Instance.UpdateKillText(killCount);
     }
-
-    public void IncrementDeathCount()
-    {
-        deathCount++;
-        //GameplayUIController.Instance.UpdateDeathText(deathCount);
-    }
-
 
     public float GetWeaponDamagePoint()
     {
