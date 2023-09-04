@@ -69,6 +69,7 @@ public class EnemyController : MonoBehaviour
         }
         if (health <= 0)
         {
+            player.IncreamentKillCount();
             currentState = new Die(this, agent, anim, player.transform);
         }
     }
@@ -76,7 +77,6 @@ public class EnemyController : MonoBehaviour
     public void Die()
     {
         isDied = true;
-        player.IncreamentKillCount();
         GameManager.Instance.EnemyDied(this);
         can.gameObject.SetActive(false);
         Destroy(gameObject, 2);

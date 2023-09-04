@@ -20,9 +20,10 @@ public class UIController : Singleton<UIController>
     [SerializeField] private TextMeshProUGUI targetText;
 
     [Header("Level Display screen")]
-    [SerializeField] private GameObject levelDispalyScreen;
-    [SerializeField] private TextMeshProUGUI levelCountText;
-    [SerializeField] private TextMeshProUGUI targetCountText;
+    [SerializeField] private GameObject levelCompleteScreen;
+    [SerializeField] private Button lvlHomeButton;
+    [SerializeField] private Button lvlRetryButton;
+    [SerializeField] private Button lvlNextButton;
 
     [Header("Game Over screen")]
     [SerializeField] private GameObject gameOverScreen;
@@ -41,6 +42,9 @@ public class UIController : Singleton<UIController>
         quitButton.onClick.AddListener(OnQuitButtonClick);
         homeButton.onClick.AddListener(OnHomeButtonclick);
         retryButton.onClick.AddListener(OnRetryButtonclick);
+        lvlHomeButton.onClick.AddListener(OnHomeButtonclick);
+        lvlRetryButton.onClick.AddListener(OnRetryButtonclick);
+        lvlNextButton.onClick.AddListener(OnNextLevelButtonClick);
     }
 
     private void Start()
@@ -91,6 +95,21 @@ public class UIController : Singleton<UIController>
         GameManager.Instance.StartLevel();
     }
 
+    private void OnNextLevelButtonClick()
+    {
+        StartCoroutine(NextLevel());
+    }
+
+    private IEnumerator NextLevel()
+    {
+        DisableAllScreen();
+        loadingScreen.gameObject.SetActive(true);
+        GameManager.Instance.StartNextLevel();
+        yield return StartCoroutine(loadingScreen.PlayLoadingAnimation());
+        GameManager.Instance.StartLevel();
+    }
+
+
     public void UpdateKillText(int count)
     {
         killText.text = "KILL : " + count.ToString();
@@ -104,9 +123,7 @@ public class UIController : Singleton<UIController>
 
     public void EnableLevelDisplayScreen(int level)
     {
-        levelDispalyScreen.SetActive(true);
-        levelCountText.text = "LEVEL : " + level.ToString();
-        targetCountText.text = "TARGET : " + level.ToString();
+        levelCompleteScreen.SetActive(true);
     }
 
     public void EnableGameOverScreen()
@@ -118,6 +135,7 @@ public class UIController : Singleton<UIController>
     {
         gameOverScreen.SetActive(false);
         mainMenuScreen.SetActive(false);
+        levelCompleteScreen.SetActive(false);
     }
 
     private void OnDisable()
@@ -126,5 +144,8 @@ public class UIController : Singleton<UIController>
         quitButton.onClick.RemoveListener(OnQuitButtonClick);
         homeButton.onClick.RemoveListener(OnHomeButtonclick);
         retryButton.onClick.RemoveListener(OnRetryButtonclick);
+        lvlHomeButton.onClick.RemoveListener(OnHomeButtonclick);
+        lvlRetryButton.onClick.RemoveListener(OnRetryButtonclick);
+        lvlNextButton.onClick.RemoveListener(OnNextLevelButtonClick);
     }
 }

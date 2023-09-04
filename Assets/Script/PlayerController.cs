@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = newtransform.position;
         transform.rotation = newtransform.rotation;
+        killCount = 0;
         SetHealth(100);
     }
 }

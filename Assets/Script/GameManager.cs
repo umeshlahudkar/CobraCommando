@@ -54,6 +54,17 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void StartNextLevel()
+    {
+        ClearEnemies();
+        currentLevel++;
+        enemiesToSpawn = currentLevel;
+        UIController.Instance.UpdateLevelTargetText(currentLevel);
+        UIController.Instance.UpdateKillText(0);
+        StartCoroutine(SpawnEnemies());
+        playerController.Reset(SpawnWaypointHandler.Instance.GetSpawnPoint());
+    }
+
     public void RetryLevel()
     {
         ClearEnemies();
@@ -92,7 +103,8 @@ public class GameManager : Singleton<GameManager>
         } 
         else if(enemyControllers.Count == 0)
         {
-            //StartNextLevel();
+            UIController.Instance.EnableLevelDisplayScreen(currentLevel);
+            isGameRunning = false;
         }
     }
 
